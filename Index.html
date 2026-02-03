@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valentine's for Seju</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; padding: 50px; }
+        img { max-width: 300px; border-radius: 10px; margin: 20px; }
+        button { font-size: 20px; margin: 10px; }
+    </style>
+    <script>
+        function respond(answer) {
+            if (answer === 'yes') {
+                document.getElementById('response').innerHTML = 'Yay! See this memory:';
+                document.getElementById('memory').style.display = 'block';
+            } else {
+                document.getElementById('response').innerHTML = 'Oh no! Try again?';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Seju, will you be my Valentine?</h1>
+    <button onclick="respond('yes')">Yes</button>
+    <button onclick="respond('no')">No</button>
+    <h2 id="response"></h2>
+    <div id="memory" style="display:none;">
+        <img src="YOUR_IMAGE_URL_HERE" alt="A memory with Seju">
+    </div>
+</body>
+</html>
