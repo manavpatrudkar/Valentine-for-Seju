@@ -1,31 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Valentine's for Seju</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; padding: 50px; }
-        img { max-width: 300px; border-radius: 10px; margin: 20px; }
-        button { font-size: 20px; margin: 10px; }
-    </style>
-    <script>
-        function respond(answer) {
-            if (answer === 'yes') {
-                document.getElementById('response').innerHTML = 'Yay! See this memory:';
-                document.getElementById('memory').style.display = 'block';
-            } else {
-                document.getElementById('response').innerHTML = 'Oh no! Try again?';
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <title>Valentine for Seju 💜</title>
+
+  <!-- Fun font -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(135deg, #7b2cbf, #c77dff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .buttons {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+
+    button {
+      font-size: 1.5rem;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: absolute;
+      transition: all 0.2s ease;
+    }
+
+    #yes {
+      background-color: #ff4d6d;
+      color: white;
+      left: 40%;
+      top: 50%;
+    }
+
+    #no {
+      background-color: white;
+      color: #7b2cbf;
+      left: 55%;
+      top: 50%;
+    }
+
+    #result {
+      display: none;
+      text-align: center;
+      animation: pop 0.6s ease forwards;
+    }
+
+    #result h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    #result img {
+      max-width: 300px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Seju, will you be my Valentine?</h1>
-    <button onclick="respond('yes')">Yes</button>
-    <button onclick="respond('no')">No</button>
-    <h2 id="response"></h2>
-    <div id="memory" style="display:none;">
-        <img src="YOUR_IMAGE_URL_HERE" alt="A memory with Seju">
-    </div>
+
+  <h1>Seju 💜  
+    <br>Will you be my Valentine?
+  </h1>
+
+  <div class="buttons">
+    <button id="yes">Yes 😘</button>
+    <button id="no">No 🙄</button>
+  </div>
+
+  <div id="result">
+    <h2>YAYYY 💜💜💜  
+      <br>I knew it!!!
+    </h2>
+    <img src="PASTE_YOUR_IMAGE_URL_HERE">
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const result = document.getElementById("result");
+
+    yesBtn.addEventListener("mouseover", moveYes);
+
+    noBtn.addEventListener("mouseover", () => {
+      moveYes();
+    });
+
+    function moveYes() {
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 150);
+      yesBtn.style.left = x + "px";
+      yesBtn.style.top = y + "px";
+    }
+
+    yesBtn.addEventListener("click", () => {
+      document.querySelector(".buttons").style.display = "none";
+      document.querySelector("h1").style.display = "none";
+      result.style.display = "block";
+    });
+  </script>
+
 </body>
 </html>
