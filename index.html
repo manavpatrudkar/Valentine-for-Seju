@@ -23,13 +23,13 @@
   h1 {
     font-size: 3rem;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 
   .area {
     position: relative;
     width: 90vw;
-    height: 250px;
+    height: 260px;
   }
 
   button {
@@ -45,25 +45,34 @@
     background: #ff4d6d;
     color: white;
     left: 30%;
-    top: 50%;
+    top: 55%;
   }
 
   #no {
     background: white;
     color: #7b2cbf;
     left: 55%;
-    top: 50%;
+    top: 55%;
   }
 
   #result {
     display: none;
     text-align: center;
+    z-index: 2;
   }
 
   #result img {
-    max-width: 300px;
+    max-width: 320px;
     border-radius: 20px;
     margin-top: 20px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
   }
 </style>
 </head>
@@ -82,32 +91,68 @@
   <img src="https://raw.githubusercontent.com/manavpatrudkar/Valentine-for-Seju/main/Seju.jpg">
 </div>
 
+<canvas id="confetti"></canvas>
+
 <script>
   const yes = document.getElementById("yes");
   const no = document.getElementById("no");
   const area = document.getElementById("area");
+  let active = true;
 
   function move(btn) {
+    if (!active) return;
+
     const maxX = area.clientWidth - btn.offsetWidth;
     const maxY = area.clientHeight - btn.offsetHeight;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
-    btn.style.left = x + "px";
-    btn.style.top = y + "px";
+    btn.style.left = Math.random() * maxX + "px";
+    btn.style.top = Math.random() * maxY + "px";
   }
 
   yes.addEventListener("mouseenter", () => move(yes));
-  yes.addEventListener("touchstart", () => move(yes));
-
   no.addEventListener("mouseenter", () => move(no));
+  yes.addEventListener("touchstart", () => move(yes));
   no.addEventListener("touchstart", () => move(no));
 
+  // CONFETTI
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let confetti = [];
+
+  function launchConfetti() {
+    for (let i = 0; i < 150; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 5 + 2,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`
+      });
+    }
+    requestAnimationFrame(drawConfetti);
+  }
+
+  function drawConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+      ctx.fillStyle = c.color;
+      ctx.fill();
+      c.y += c.d;
+    });
+    requestAnimationFrame(drawConfetti);
+  }
+
   yes.addEventListener("click", () => {
+    active = false;
     document.querySelector("h1").style.display = "none";
     area.style.display = "none";
     document.getElementById("result").style.display = "block";
+    launchConfetti();
   });
 </script>
 
